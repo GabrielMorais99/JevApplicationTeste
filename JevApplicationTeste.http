@@ -1,0 +1,26 @@
+@host = http://localhost:5080
+
+### Verificar que a API está rodando
+GET {{host}}/health
+
+### Classificar um incidente
+POST {{host}}/chamados/classificar
+Content-Type: application/json
+
+{
+  "descricao": "A integração de funcionários parou e nenhum cadastro chega ao sistema desde ontem. Toda a operação está bloqueada."
+}
+
+### Comparar um chamado ambíguo (no modo real)
+POST {{host}}/chamados/classificar
+Content-Type: application/json
+
+{
+  "descricao": "O sistema está estranho hoje, podem verificar?"
+}
+
+### Deve retornar 400 por falha de validação
+POST {{host}}/chamados/classificar
+Content-Type: application/json
+
+{ "descricao": "" }
